@@ -49,14 +49,17 @@ Field::Field(int width, int height) {
 
 /**
  * Handles the main logic of updating organsims.
+ * @param symbol The symbol of the organism to update.
  */
 void Field::step(char symbol) {
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
 			Organism* o = getInhabitant(Position(x, y));
 			if (o != NULL && !o->hasUpdated()) {
-				o->update();
-				o->setUpdated(true);
+				if (o->getSymbol() == symbol) {
+					o->update();
+					o->setUpdated(true);
+				}
 			}
 		}
 	}

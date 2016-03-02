@@ -1,11 +1,6 @@
 #include <stdlib.h>
-#include <iostream>
 #include "doodlebug.h"
 #include "position.h"
-
-//TODO: Remove these after done debugging
-using std::cout;
-using std::endl;
 
 namespace Organisms {
 
@@ -44,26 +39,25 @@ void Doodlebug::update() {
  * their cell and eat them. Otherwise, a doodlebug moves just like an ant.
  */
   void Doodlebug::move() {
-      Field* field = this->getField();
+      Field* f = this->getField(); // Shorter reference
       Position start = this->getPos();
-      Direction dir = field->getRandomDirection();
-      Position end = field->simulateMove(start, dir);
-      if (field->validPos(end)) {
-        if (field->isEmpty(end)) {
-          this->setPos(end);
-        } else {
-          cout << "Position: (" << end.x << ", " << end.y << ") is not empty!" << endl;
-          Organism* o = field->getInhabitant(end);
-          if (o->getSymbol() == 'O') {
-            lastMeal = 0;
-            field->setInhabitant(end, NULL);
-            this->setPos(end);
-            cout << "Doodlebug ate :)" << endl;
+      bool foundAnt = false;
+      int i; // Loop counter
+      for (i = 0; i < 3; i++) {
+          // Implementation of doodlebug 'special' behavior
+          Position pos = f->simulateMove(start, Direction(i));
+          if (f->getSymbol(pos.x, pos.y) == 'O') {
+              lastMeal = 0;
+              free(f->getInhabitant(pos));
+              f->setInhabitant(pos, NULL);
+              this->setPos(pos);
+              foundAnt = true;
+              break;
           }
-        }
-      } else {
-        cout << "Position: (" << end.x << ", " << end.y << ") is not valid!" << endl;
       }
+
+      // Perform default organism behavior if no ants in adjacent cells
+      if (!foundAnt) { Organism::move(); }
   }
 
   /**
@@ -89,11 +83,8 @@ void Doodlebug::update() {
   void Doodlebug::starve() {
     lastMeal += 1;
     if (lastMeal >= 3) {
-        //TODO: Remove x and y debugging message
-        int x = this->getPos().x;
-        int y = this->getPos().y;
         this->getField()->setInhabitant(this->getPos(), NULL);
-        cout << "Starved to death at (" << x << ", " << y << ")" << endl;
+        free(this->getField()->getInhabitant(this->getPos()));
     }
   }
 

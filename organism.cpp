@@ -22,6 +22,20 @@ namespace Organisms {
   }
 
   /**
+   * Default movement of an organism. Randomly selects a direction to move in
+   * and if the position is on the grid and empty, the organism will move.
+   * Otherwise, the organism will remain in its current position.
+   */
+  void Organism::move() {
+      Field* f = this->field; // Shorter reference
+      Direction dir = f->getRandomDirection();
+      Position end = f->simulateMove(this->pos, dir);
+      if (f->validPos(end) && f->isEmpty(end)) {
+          setPos(end);
+      }
+  }
+
+  /**
    * Gets the amount of steps the organism survived.
    * @return The amount of steps survived.
    */

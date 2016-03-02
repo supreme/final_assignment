@@ -16,7 +16,7 @@ namespace Organisms {
     Organism();
     int getStepsSurvived();
     virtual char getSymbol() const;
-    virtual void move() = 0;
+    virtual void move();
     virtual void breed() = 0;
     void setPos(Position pos);
     class Field* getField();

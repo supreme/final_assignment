@@ -35,9 +35,8 @@ int main( ) {
   Organism* ant2 = new Ant(field, 2, 2);
   Organism* ant3 = new Ant(field, 4, 3);
 
-  Position pos = Position(7, 7);
-  cout << pos.x << " " << pos.y << endl;
-
+  field->print();
+  
   string input = "";
   while (1) {
     cout << "Press any key to continue or exit to stop..." << endl;

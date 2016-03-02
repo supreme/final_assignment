@@ -40,26 +40,8 @@ namespace Organisms {
       breed();
     }
 
-    /**
-     * Randomly moves the ant either up, down, left, or right by one cell.
-     * If the resulting cell is occupied or would cause the ant to go off the
-     * screen the Ant will remain in its current cell.
-     */
-    void Ant::move() {
-      Field* field = this->getField();
-      Position start = this->getPos();
-      Direction dir = field->getRandomDirection();
-      Position end = field->simulateMove(start, dir);
-      if (field->validPos(end)) {
-        if (field->isEmpty(end)) {
-          this->setPos(end);
-        } else {
-          cout << "Position: (" << end.x << ", " << end.y << ") is not empty!" << endl;
-        }
-      } else {
-        cout << "Position: (" << end.x << ", " << end.y << ") is not valid!" << endl;
-      }
-    }
+    /** Call to parent function */
+    void Ant::move() { Organism::move(); }
 
     /**
      * If an ant survives for three steps, at the end of the step the any will
