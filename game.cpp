@@ -13,12 +13,18 @@ using Organisms::Ant;
 using Organisms::Doodlebug;
 
 // Smaller during testing
-#define FIELD_WIDTH (5)
-#define FIELD_HEIGHT (5)
+#define FIELD_WIDTH (20)
+#define FIELD_HEIGHT (20)
 
-/**
+#define ANT_POPULATION (100)
+#define DOODLEBUG_POPULATION (5)
 
-*/
+Position getRandomPos() {
+  int x  = (rand() % 20);
+  int y = (rand() % 20);
+  return Position(x, y);
+}
+
 int main( ) {
   Field* field; // Holds a pointer to the playing field object
   srand(time(NULL));
@@ -26,17 +32,27 @@ int main( ) {
 
   field = new Field(FIELD_WIDTH, FIELD_HEIGHT);
 
-  // Put some Organisms on the field
-  Organism* org1 = new Doodlebug(field, 2, 3);
-  Organism* d1 = new Doodlebug(field, 1, 1);
-  Organism* d2 = new Doodlebug(field, 2, 4);
-  Organism* org2 = new Ant(field, 4, 1);
-  Organism* ant1 = new Ant(field, 3, 3);
-  Organism* ant2 = new Ant(field, 2, 2);
-  Organism* ant3 = new Ant(field, 4, 3);
+  int i; // Loop counter
+  for (i = 0; i < ANT_POPULATION; i++) {
+    Position pos = getRandomPos();
+    while (!field->isEmpty(pos)) {
+      pos = getRandomPos();
+    }
+
+    Organism* ant = new Ant(field, pos);
+  }
+
+  for (i = 0; i < DOODLEBUG_POPULATION; i++) {
+    Position pos = getRandomPos();
+    while (!field->isEmpty(pos)) {
+      pos = getRandomPos();
+    }
+
+    Organism* doodlebug = new Doodlebug(field, pos);
+  }
 
   field->print();
-  
+
   string input = "";
   while (1) {
     cout << "Press any key to continue or exit to stop..." << endl;

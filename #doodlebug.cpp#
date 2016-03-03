@@ -28,8 +28,8 @@ namespace Organisms {
 void Doodlebug::update() {
     move();
     this->incrementSteps();
-    breed();
     starve();
+    breed();
 }
 
 /**
@@ -41,11 +41,10 @@ void Doodlebug::update() {
       Position start = this->getPos();
       bool foundAnt = false;
       int i; // Loop counter
-      for (i = 0; i < 4; i++) {
+      for (i = 0; i < 3; i++) {
           // Implementation of doodlebug 'special' behavior
-          Direction dir = static_cast<Direction>(i);
-          Position pos = f->simulateMove(start, dir);
-          if (f->validPos(pos) && f->getSymbol(pos.x, pos.y) == 'O') {
+          Position pos = f->simulateMove(start, Direction(i));
+          if (f->getSymbol(pos.x, pos.y) == 'O') {
               lastMeal = 0;
               free(f->getInhabitant(pos));
               f->setInhabitant(pos, NULL);
@@ -71,6 +70,7 @@ void Doodlebug::update() {
       Position spawnPos = field->simulateMove(pos, dir);
       if (field->validPos(spawnPos) && field->isEmpty(spawnPos)) {
         field->setInhabitant(spawnPos, new Doodlebug(field, spawnPos));
+	cout
       }
     }
   }

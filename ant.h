@@ -12,7 +12,7 @@ namespace Organisms {
   class Ant : public Organism {
   public:
     Ant();
-    Ant(Field* field, int x, int y);
+    Ant(Field* field, Position pos);
     virtual char getSymbol() const;
     virtual void move();
     virtual void breed();

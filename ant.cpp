@@ -1,10 +1,5 @@
-#include <iostream> //TODO: Remove
 #include "ant.h"
 #include "position.h"
-
-//TODO: Remove these after done debugging
-using std::cout;
-using std::endl;
 
 /**
  * Represents an ant which is a subclass of organism.
@@ -22,12 +17,10 @@ namespace Organisms {
     /**
      * Constructs an ant with a reference to the field containing it.
      * @param field The field containing the ant.
-     * @param x The initial x position of the ant.
-     * @param y The inital y position of the ant.
+     * @param pos The position of the ant.
      */
-    Ant::Ant(Field* field, int x, int y) : Organism() {
+    Ant::Ant(Field* field, Position pos) : Organism() {
       this->setField(field);
-      Position pos = Position(x, y);
       this->setPos(pos);
     }
 
@@ -55,7 +48,7 @@ namespace Organisms {
             Direction dir = field->getRandomDirection();
             Position spawnPos = field->simulateMove(pos, dir);
             if (field->validPos(spawnPos) && field->isEmpty(spawnPos)) {
-              field->setInhabitant(spawnPos, new Ant(field, spawnPos.x, spawnPos.y));
+              field->setInhabitant(spawnPos, new Ant(field, spawnPos));
             }
         }
     }
